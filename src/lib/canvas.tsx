@@ -1,9 +1,9 @@
 import { RefObject, useEffect, useRef } from 'react';
 
-export type AnimationSetup<T> = (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, customArguments: T) => AnimationFrame;
+export type Animation<ExternalDependencies> = (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, externalDependencies: ExternalDependencies) => AnimationFrame;
 export type AnimationFrame = (frameCount: number) => void;
 
-export const useCanvas = <T extends unknown[]>(drawFrameFactory: AnimationSetup<T>, customArguments: T): RefObject<HTMLCanvasElement> => {
+export const useCanvas = <ExternalDependencies extends unknown[]>(drawFrameFactory: Animation<ExternalDependencies>, externalDependencies: ExternalDependencies): RefObject<HTMLCanvasElement> => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -13,7 +13,7 @@ export const useCanvas = <T extends unknown[]>(drawFrameFactory: AnimationSetup<
         // getContext can return null for unknown contexts but with '2d' we can be sure it will work, hence the !
         const context = canvas.getContext('2d')!;
         let frameCount = 0;
-        const drawFrame = drawFrameFactory(canvas, context, customArguments);
+        const drawFrame = drawFrameFactory(canvas, context, externalDependencies);
 
         const render = (): number => {
             drawFrame(frameCount);
@@ -27,7 +27,7 @@ export const useCanvas = <T extends unknown[]>(drawFrameFactory: AnimationSetup<
         // we need to use spread to dynamically pass the dependencies which works in the runtime, 
         // but the compiler does not like it because it can't be statically checked
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [drawFrameFactory, ...customArguments])
+    }, [drawFrameFactory, ...externalDependencies])
 
     return canvasRef;
 }
