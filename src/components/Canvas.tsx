@@ -1,7 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const Canvas = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [frequency, setFrequency] = useState(5);
+    const [width, setWidth] = useState(80);
 
     useEffect(() => {
         if (!canvasRef.current) return;
@@ -14,9 +16,9 @@ export const Canvas = () => {
         const draw = (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D): number => {
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.beginPath();
-            context.arc(canvas.width / 2, canvas.height / 2, 50 * Math.abs(Math.cos(i)), 0, 2 * Math.PI);
+            context.arc(canvas.width / 2, canvas.height / 2, width * Math.abs(Math.cos(i)), 0, 2 * Math.PI);
             context.fill();
-            i += 0.01;
+            i += frequency / 200;
 
             return requestAnimationFrame(() => draw(canvas, context))
         }
@@ -24,7 +26,15 @@ export const Canvas = () => {
         const animationId = draw(canvas, context);
 
         return () => cancelAnimationFrame(animationId);
-    })
+    }, [frequency, width])
 
-    return <canvas ref={canvasRef}></canvas>
+    return <div>
+        <label>Frequency
+        <input type="range" name="frequency" id="frequency" min="1" max="10" value={frequency} onChange={event => setFrequency(parseInt(event.target.value))} />
+        </label>
+        <label>Max Width
+        <input type="range" name="width" id="width" min="10" max="100" value={width} onChange={event => setWidth(parseInt(event.target.value))} />
+        </label>
+        <canvas ref={canvasRef}></canvas>
+    </div>
 }
