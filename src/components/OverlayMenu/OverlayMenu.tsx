@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import styles from "./OverlayMenu.module.css";
 
 export const OverlayMenu: FC = ({ children }) => {
-    const [hidden, setHidden] = useState(true)
+    const [hidden, setHidden] = useState(false)
     return <div className={styles.menu} >
         {
             hidden ?
