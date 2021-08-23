@@ -21,7 +21,6 @@ const draw: AnimationSetup<[number, number]> = (canvas, context, [frequency, wid
 }
 
 function App() {
-  console.log('App')
   const [frequency, setFrequency] = useState(5);
   const [width, setWidth] = useState(80);
   const [unneeded, setUnneeded] = useState(80);
