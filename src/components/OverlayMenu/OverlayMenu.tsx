@@ -1,13 +1,17 @@
 import { FC, useState } from "react";
+import styles from "./OverlayMenu.module.css";
 
 export const OverlayMenu: FC = ({ children }) => {
     const [hidden, setHidden] = useState(true)
-    return <div>
-        {hidden ? <p onClick={() => setHidden(false)}>&gt;</p> :
-            <div>
-                <p onClick={() => setHidden(true)}>&times;</p>
-                {children}
-            </div>
-        }
-    </div>
+    return <div className={styles.menu} >
+        {
+            hidden ?
+                <button className={styles.toggle} onClick={() => setHidden(false)} title="Show controls">Controls &gt;</button>
+                :
+                <>
+                    <button className={styles.toggle} onClick={() => setHidden(true)} title="Hide controls">&times;</button>
+                    {children}
+                </>
+        }</div>
+
 }
