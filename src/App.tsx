@@ -7,7 +7,6 @@ import styles from './App.module.css';
 function App() {
   const [frequency, setFrequency] = useState(5);
   const [width, setWidth] = useState(80);
-  const [unneeded, setUnneeded] = useState(80);
 
   const canvasRef = useCanvas(draw, [frequency, width])
 
@@ -19,9 +18,6 @@ function App() {
         </label>
         <label className={styles.slider}>Max Width
         <input type="range" name="width" id="width" min="1" max="100" value={width} onChange={event => setWidth(parseInt(event.target.value))} />
-        </label>
-        <label className={styles.slider}>Unneeded Value
-        <input type="range" name="unneeded" id="unneeded" min="1" max="100" value={unneeded} onChange={event => setUnneeded(parseInt(event.target.value))} />
         </label>
       </OverlayMenu>
       <canvas ref={canvasRef} width={window.innerWidth} height={window.innerHeight}></canvas>
