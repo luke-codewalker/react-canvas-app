@@ -10,6 +10,7 @@ export const draw: Animation<[number, number, { x: number, y: number }]> = (canv
     context.lineWidth = 4;
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.font = "12px Arial";
+
     // this function is called to paint each frame of the animation
     return frameCount => {
         context.strokeStyle = '#0060df';
