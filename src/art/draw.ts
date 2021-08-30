@@ -13,5 +13,9 @@ export const draw: Animation<[number]> = (canvas: HTMLCanvasElement, context: Ca
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.fillRect(x, y, size, size);
         x = (x + stepSize) % canvas.width;
+
+        // you can stop the animation anytime by returning true (it can only be restarted by changing dependencies)
+        const stop = frameCount > 314;
+        return stop;
     }
 }
