@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { draw } from './draw';
-import { useCanvas } from "./lib/canvas";
+import { draw } from '../art/draw';
+import { useCanvas } from "../lib/canvas";
 import './App.css';
 
 const config = {
-  width: 1200,
+  width: 800,
   height: 800
 }
 
