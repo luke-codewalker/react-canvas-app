@@ -9,41 +9,23 @@ const config = {
 }
 
 function App() {
-  const [frequency, setFrequency] = useState(25);
-  const [width, setWidth] = useState(50);
-  const [position, setPosition] = useState({ x: config.width / 2, y: config.height / 2 })
+  const [stepSize, setStepSize] = useState(1);
 
-  const canvasRef = useCanvas(draw, [frequency, width, position])
-
-  const handleCanvasClick = (event: MouseEvent<HTMLCanvasElement>) => {
-    const canvas = event.target as HTMLCanvasElement;
-    const { clientX, clientY } = event;
-    const xPercent = (clientX - canvas.offsetLeft) / canvas.clientWidth;
-    const yPercent = (clientY - canvas.offsetTop) / canvas.clientHeight;
-    setPosition({ x: Math.round(xPercent * canvas.width), y: Math.round(yPercent * canvas.height) });
-  }
+  const canvasRef = useCanvas(draw, [stepSize])
 
   return (
     <div className="app">
       <section className="canvas-container">
-        <canvas
-          onClick={handleCanvasClick}
-          ref={canvasRef} width={config.width} height={config.height}></canvas>
+        <canvas ref={canvasRef} width={config.width} height={config.height}></canvas>
       </section>
       <section className="menu">
         <h1>React Canvas App</h1>
         <p>Use these inputs to control the animation:</p>
-        <label className="slider">Frequency
-          <input type="range" name="frequency" id="frequency" min="0" max="100" value={frequency}
-            onChange={event => setFrequency(parseInt(event.target.value))} />
-          {frequency}
+        <label className="slider">Step Size
+          <input type="range" name="step-size" id="step-size" min="0" max="20" value={stepSize}
+            onChange={event => setStepSize(parseInt(event.target.value))} />
+          {stepSize}
         </label>
-        <label className="slider">Max Width
-          <input type="range" name="width" id="width" min="1" max="100" value={width}
-            onChange={event => setWidth(parseInt(event.target.value))} />
-          {width}
-        </label>
-        <p>Click on the canvas to set a new center point for the animation.</p>
       </section>
     </div>
   );

@@ -1,29 +1,17 @@
 import { Animation } from "../lib/canvas";
+const size = 20;
 
-export const draw: Animation<[number, number, { x: number, y: number }]> = (canvas, context, [frequency, width, center]) => {
+export const draw: Animation<[number]> = (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, [stepSize]) => {
     // this code is run before the animation whenever the external dependencies change
-    let iteration = 0;
-    const step = 0.05 * frequency / 100;
-    const maxRadius = canvas.width * width / 100 / 2;
-    const { x, y } = center;
-
-    context.lineWidth = 4;
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.font = "12px Arial";
+    let x = 0;
+    const y = canvas.height / 2;
+    context.fillStyle = '#333';
 
     // this function is called to paint each frame of the animation
     return frameCount => {
-        context.strokeStyle = '#0060df';
-        context.fillStyle = 'rgba(255, 255, 255, 0.125)';
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.beginPath();
-        context.arc(x, y, maxRadius * Math.abs(Math.cos(iteration)), 0, 2 * Math.PI);
-        context.stroke();
-
-        context.clearRect(12, 12, 120, 16);
-        context.fillStyle = '#333';
-        context.fillText(`Frame ${frameCount} @ ${x},${y}`, 12, 24);
-
-        iteration += step;
+        // this is a closure so we can access anything from setup
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillRect(x, y, size, size);
+        x = (x + stepSize) % canvas.width;
     }
 }
