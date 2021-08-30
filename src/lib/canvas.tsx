@@ -24,10 +24,7 @@ export const useCanvas = <ExternalDependencies extends unknown[]>(drawFrameFacto
 
         render();
 
-        return () => {
-            console.log('cleanup', animationIdRef.current)
-            window.cancelAnimationFrame(animationIdRef.current);
-        };
+        return () => window.cancelAnimationFrame(animationIdRef.current);
         // we need to use spread to dynamically pass the dependencies which works in the runtime, 
         // but the compiler does not like it because it can't be statically checked
         // eslint-disable-next-line react-hooks/exhaustive-deps
