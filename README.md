@@ -1,6 +1,6 @@
 # React Canvas App
 
-This is a demo and starter template for an interactive canvas based animation. I use it in personal projects for eperimenting in generative art, physics simulation etc. 
+This is a demo and starter template for an interactive canvas based animation. I use it in personal projects for experimenting in generative art and physics simulations. 
 
 ## Quick start
 
