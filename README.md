@@ -1,46 +1,42 @@
-# Getting Started with Create React App
+# React Canvas App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a demo and starter template for an interactive canvas based animation. I use it in personal projects for eperimenting in generative art, physics simulation etc. 
 
-## Available Scripts
+## Quick start
 
-In the project directory, you can run:
+- Pull done a copy with degit: `npx degit https://github.com/luke-codewalker/react-canvas-app#main <your-project-name>`. 
+- Install all dependencies with `npm i`
+- Run it in development mode with `npm start`  
 
-### `npm start`
+## Customize
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To customize the app there are two places to edit, depending on what you want to do:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Animation in `src/art/draw.ts`
+This file contains the code for setting up and running your animation frame by frame. It is essentially a factory function that receives the canvas, the drawing context and any custom external dependencies you speficy. 
 
-### `npm test`
+```ts
+import { Animation } from "../lib/canvas";
+const size = 20;
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+export const draw: Animation<[number]> = (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, [stepSize: number]) => {
+    // this code is run before the animation whenever the external dependencies change
+    let x = 0;
+    const y = canvas.height / 2;
 
-### `npm run build`
+    // this function is called to paint each frame of the animation
+    return frameCount => {
+        // this is a closure so we can access anything from setup
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillRect(x, y, size, size);
+        x = (x + stepSize) % canvas.width
+    }
+}
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+It is run once and the function you return from it is run on every animation cycle to paint a new frame to the canvas. Thanks to the magic of React hooks the factory is run again automatically if any of the dependencies change.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Interactivity in `src/app/App.ts`
+This is the place where the stateful logic lives (which you can pass as dependencies into the animation). If you want to change any of the controls or add event listeners this is the place to do it.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+It's a React app, so you can do anything here you can do in React.
