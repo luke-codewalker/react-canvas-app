@@ -16,6 +16,9 @@ function App() {
 
   return (
     <div className="app">
+      <section className="canvas-container">
+        <canvas ref={canvasRef} width={config.width} height={config.height}></canvas>
+      </section>
       <section className="menu">
         <h1>React Canvas App</h1>
         <p>Use these inputs to control the animation</p>
@@ -27,9 +30,6 @@ function App() {
           <input type="range" name="width" id="width" min="1" max="100" value={width} onChange={event => setWidth(parseInt(event.target.value))} />
           {width}
         </label>
-      </section>
-      <section className="canvas-container">
-        <canvas ref={canvasRef} width={config.width} height={config.height}></canvas>
       </section>
     </div>
   );
