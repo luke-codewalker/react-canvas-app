@@ -1,26 +1,36 @@
 import { useState } from 'react';
-import { OverlayMenu } from './components/OverlayMenu/OverlayMenu';
 import { draw } from './draw';
 import { useCanvas } from "./lib/canvas";
-import styles from './App.module.css';
+import './App.css';
+
+const config = {
+  width: 1200,
+  height: 800
+}
 
 function App() {
-  const [frequency, setFrequency] = useState(5);
-  const [width, setWidth] = useState(80);
+  const [frequency, setFrequency] = useState(25);
+  const [width, setWidth] = useState(50);
 
   const canvasRef = useCanvas(draw, [frequency, width])
 
   return (
-    <div className="App">
-      <OverlayMenu>
-        <label className={styles.slider}>Frequency
-        <input type="range" name="frequency" id="frequency" min="1" max="10" value={frequency} onChange={event => setFrequency(parseInt(event.target.value))} />
+    <div className="app">
+      <section className="menu">
+        <h1>React Canvas App</h1>
+        <p>Use these inputs to control the animation</p>
+        <label className="slider">Frequency
+          <input type="range" name="frequency" id="frequency" min="0" max="100" value={frequency} onChange={event => setFrequency(parseInt(event.target.value))} />
+          {frequency}
         </label>
-        <label className={styles.slider}>Max Width
-        <input type="range" name="width" id="width" min="1" max="100" value={width} onChange={event => setWidth(parseInt(event.target.value))} />
+        <label className="slider">Max Width
+          <input type="range" name="width" id="width" min="1" max="100" value={width} onChange={event => setWidth(parseInt(event.target.value))} />
+          {width}
         </label>
-      </OverlayMenu>
-      <canvas ref={canvasRef} width={window.innerWidth} height={window.innerHeight}></canvas>
+      </section>
+      <section className="canvas-container">
+        <canvas ref={canvasRef} width={config.width} height={config.height}></canvas>
+      </section>
     </div>
   );
 }

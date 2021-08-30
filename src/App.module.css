@@ -1,5 +1,0 @@
-.slider {
-    display: grid;
-    grid-template-columns: minmax(60px, 50%) 1fr;
-    gap: 0.5rem;
-}
