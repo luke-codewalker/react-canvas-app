@@ -16,6 +16,12 @@
     margin-bottom: 1rem;
 }
 
+.info {
+    margin: 0;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
 .slider input {
     cursor: pointer;
 }
@@ -27,6 +33,7 @@
     max-height: calc(100vh - 2rem);
     grid-row-start: 1;
     grid-column-start: 2;
+    grid-row: 1 / 2 span;
 }
 
 canvas {
@@ -40,11 +47,16 @@ canvas {
     .app {
         display: grid;
         grid-template-columns: 25% 1fr;
+        grid-template-rows: 1fr 1rem;
     }
 
     .slider {
         display: grid;
         grid-template-columns: minmax(60px, 50%) 2fr 2rem;
         gap: 0.5rem;
+    }
+
+    .info {
+        text-align: left;
     }
 }

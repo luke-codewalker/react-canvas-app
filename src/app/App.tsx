@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState } from 'react';
 import { draw } from '../art/draw';
 import { useCanvas } from "../lib/canvas";
 import './App.css';
@@ -27,6 +27,7 @@ function App() {
           {stepSize}
         </label>
       </section>
+      <footer className="info">Made in 2021 with ❤ by <a href="https://github.com/luke-codewalker">Luke Codewalker</a></footer>
     </div>
   );
 }
