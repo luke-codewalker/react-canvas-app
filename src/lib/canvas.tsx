@@ -1,7 +1,7 @@
 import { RefObject, useEffect, useRef } from 'react';
 
 export type Animation<ExternalDependencies> = (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, externalDependencies: ExternalDependencies) => AnimationFrame;
-export type AnimationFrame = (frameCount: number) => undefined | boolean;
+export type AnimationFrame = (frameCount: number) => void | boolean;
 
 export const useCanvas = <ExternalDependencies extends unknown[]>(drawFrameFactory: Animation<ExternalDependencies>, externalDependencies: ExternalDependencies): RefObject<HTMLCanvasElement> => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
