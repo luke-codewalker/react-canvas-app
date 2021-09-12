@@ -25,7 +25,7 @@ export const useCanvas = <ExternalDependencies extends unknown[]>(drawFrameFacto
             }
         }
 
-        render();
+        animationIdRef.current = window.requestAnimationFrame(render)
 
         return () => window.cancelAnimationFrame(animationIdRef.current);
         // we need to use spread to dynamically pass the dependencies which works in the runtime, 
