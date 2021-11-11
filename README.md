@@ -40,7 +40,7 @@ export const draw: Animation<[number]> = (canvas: HTMLCanvasElement, context: Ca
 
         if (frameCount === canvas.width) {
             // if you want to start over use resetAnimation(), this will call your draw function again
-            // and start y new animation loop
+            // and start a new animation loop
             resetAnimation();
         }
     }
@@ -48,6 +48,26 @@ export const draw: Animation<[number]> = (canvas: HTMLCanvasElement, context: Ca
 ```
 
 It is run once and the function you return from it is run on every animation cycle to paint a new frame to the canvas. Thanks to the magic of React hooks the factory is run again automatically if any of the dependencies change (that's also how `resetAnimation()` works).
+
+#### Async animation
+
+The function to paint each frame can return a promise so you can also do asynchronous operations that will be awaited between renders:
+
+```typescript
+import { Animation } from "../lib/canvas";
+
+export const draw: Animation<[number]> = (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, [stepSize]) => {
+    return async () => {
+        const res = await fetch('https://random-data-api.com/api/color/random_color');
+        const data = await res.json();
+        context.fillStyle = data.hex_value;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        await new Promise<void>((resolve) => {
+            setTimeout(() => resolve(), 5000);
+        })
+    }
+}
+```
 
 ### Interactivity in `src/app/App.ts`
 This is the place where the stateful logic lives (which you can pass as dependencies into the animation). If you want to change any of the controls or add event listeners this is the place to do it.

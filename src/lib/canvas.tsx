@@ -28,9 +28,9 @@ export const useCanvas = <ExternalDependencies extends unknown[]>(
         const drawFrame = drawFrameFactory(canvas, context, externalDependencies);
         let isAnimating = true;
 
-        const render = (): void => {
+        const render = async (): Promise<void> => {
             if (isAnimating) {
-                drawFrame({
+                await drawFrame({
                     frameCount,
                     startAnimation: () => isAnimating = true,
                     stopAnimation: () => isAnimating = false,

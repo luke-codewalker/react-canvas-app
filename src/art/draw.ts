@@ -22,7 +22,7 @@ export const draw: Animation<[number]> = (canvas: HTMLCanvasElement, context: Ca
 
         if (frameCount === canvas.width) {
             // if you want to start over use resetAnimation(), this will call your draw function again
-            // and start y new animation loop
+            // and start a new animation loop
             resetAnimation();
         }
     }
